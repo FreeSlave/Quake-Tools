@@ -461,7 +461,11 @@ void WriteMiptex (void)
 		}
 	}
 	
-	sprintf (fullpath, "%s/%s", gamedir, path);
+	//wad bug			sprintf (fullpath, "%s/%s", gamedir, path);
+	if( strchr(path, '/') != NULL || strchr(path, '\\') != NULL)
+		sprintf (fullpath, "%s", path);							// absolut path
+	else
+		sprintf (fullpath, "%s%s", gamedir, path);				// relative path
 
 	TEX_InitFromWad (fullpath);
 	

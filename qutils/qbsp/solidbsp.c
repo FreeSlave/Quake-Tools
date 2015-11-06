@@ -157,7 +157,8 @@ surface_t *ChoosePlaneFromList (surface_t *surfaces, vec3_t mins, vec3_t maxs, q
 {
 	int			j,k,l;
 	surface_t	*p, *p2, *bestsurface;
-	vec_t		bestvalue, bestdistribution, value, dist;
+	vec_t		bestvalue, value, dist;
+	double		bestdistribution;
 	plane_t		*plane;
 	face_t		*f;
 	

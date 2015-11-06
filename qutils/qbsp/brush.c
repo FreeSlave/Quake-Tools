@@ -20,7 +20,8 @@ void CheckFace (face_t *f)
 {
 	int		i, j;
 	vec_t	*p1, *p2;
-	vec_t	d, edgedist;
+	vec_t	d;
+	double	edgedist;
 	vec3_t	dir, edgenormal, facenormal;
 	
 	if (f->numpoints < 3)
@@ -441,8 +442,8 @@ vec3_t	hull_size[3][2] = {
 
 };
 
-#define	MAX_HULL_POINTS	32
-#define	MAX_HULL_EDGES	64
+#define	MAX_HULL_POINTS	64
+#define	MAX_HULL_EDGES	128
 
 int		num_hull_points;
 vec3_t	hull_points[MAX_HULL_POINTS];

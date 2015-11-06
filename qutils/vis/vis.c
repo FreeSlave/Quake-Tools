@@ -821,8 +821,7 @@ void LoadPortals (char *name)
 			Error ("LoadPortals: reading portal %i", i);
 		if (numpoints > MAX_POINTS_ON_WINDING)
 			Error ("LoadPortals: portal %i has too many points", i);
-		if ( (unsigned)leafnums[0] > portalleafs
-		|| (unsigned)leafnums[1] > portalleafs)
+		if ( (unsigned)leafnums[0] > (unsigned)portalleafs || (unsigned)leafnums[1] > (unsigned)portalleafs )
 			Error ("LoadPortals: reading portal %i", i);
 		
 		w = p->winding = NewWinding (numpoints);
@@ -888,8 +887,9 @@ int main (int argc, char **argv)
 	char		source[1024];
 	int		i;
 	double		start, end;
-		
-	printf ("---- vis ----\n");
+
+	printf( "Quake VIS Compiler (build " __DATE__ ")\n" );
+	printf( "------------ vis ------------\n" );
 
 	for (i=1 ; i<argc ; i++)
 	{
@@ -956,7 +956,9 @@ int main (int argc, char **argv)
 //	unlink (portalfile);
 
 	end = I_FloatTime ();
-	printf ("%5.1f seconds elapsed\n", end-start);
+
+	printf( "\n--------- end vis ---------\n" );
+	Q_LogTimeElapsed( end-start );
 	
 	return 0;
 }

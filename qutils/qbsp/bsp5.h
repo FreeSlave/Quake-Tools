@@ -45,8 +45,8 @@ void	DivideWinding (winding_t *in, plane_t *split, winding_t **front, winding_t 
 
 //============================================================================
  
-#define	MAXEDGES			32
-#define	MAXPOINTS			28		// don't let a base face get past this
+#define	MAXEDGES			64
+#define	MAXPOINTS			60		// don't let a base face get past this
 									// because it can be split more later
 
 typedef struct visfacet_s

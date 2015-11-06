@@ -10,6 +10,12 @@
 #include <ctype.h>
 #include <time.h>
 #include <stdarg.h>
+#include <assert.h>
+#include <stddef.h>
+
+#if defined(_MSC_VER)
+#pragma warning( disable : 4244 )
+#endif
 
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__
@@ -25,11 +31,11 @@ typedef unsigned char byte;
 extern int myargc;
 extern char **myargv;
 
-char *strupr (char *in);
+char *strupper (char *in);
 char *strlower (char *in);
 int Q_strncasecmp (char *s1, char *s2, int n);
 int Q_strcasecmp (char *s1, char *s2);
-void Q_getwd (char *out);
+void Q_getwd (char *out, size_t);
 
 int filelength (FILE *f);
 int	FileTime (char *path);
@@ -93,5 +99,6 @@ void CopyFile (char *from, char *to);
 extern	qboolean		archive;
 extern	char			archivedir[1024];
 
+void Q_LogTimeElapsed( double elapsed_time );
 
 #endif

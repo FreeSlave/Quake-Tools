@@ -87,7 +87,8 @@ int main (int argc, char **argv)
 	double		start, end;
 	char		source[1024];
 
-	printf ("----- LightFaces ----\n");
+	printf( "Quake LIGHT Compiler (build " __DATE__ ")\n" );
+	printf( "----------- light -----------\n" );
 
 	for (i=1 ; i<argc ; i++)
 	{
@@ -139,7 +140,9 @@ int main (int argc, char **argv)
 	WriteBSPFile (source);
 
 	end = I_FloatTime ();
-	printf ("%5.1f seconds elapsed\n", end-start);
+
+	printf( "\n--------- end light ---------\n" );
+	Q_LogTimeElapsed( end-start );
 	
 	return 0;
 }

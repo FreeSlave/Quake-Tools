@@ -954,7 +954,8 @@ int main (int argc, char **argv)
 	char		sourcename[1024];
 	char		destname[1024];
 	
-//	malloc_debug (15);
+	printf( "Quake BSP Compiler (build " __DATE__ ")\n" );
+	printf( "----------- qbsp ------------\n" );
 
 //
 // check command line flags
@@ -1024,7 +1025,9 @@ int main (int argc, char **argv)
 	start = I_FloatTime ();
 	ProcessFile (sourcename, destname);
 	end = I_FloatTime ();
-	printf ("%5.1f seconds elapsed\n", end-start);
+
+	printf( "\n--------- end qbsp ---------\n" );
+	Q_LogTimeElapsed( end-start );
 	
 	return 0;
 }

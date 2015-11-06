@@ -1,6 +1,6 @@
 
 
-#define	MAX_FACES		16
+#define	MAX_FACES		64
 typedef struct mface_s
 {
 	struct mface_s	*next;
@@ -24,7 +24,7 @@ typedef struct epair_s
 typedef struct
 {
 	vec3_t		origin;
-	mbrush_t		*brushes;
+	mbrush_t	*brushes;
 	epair_t		*epairs;
 } entity_t;
 

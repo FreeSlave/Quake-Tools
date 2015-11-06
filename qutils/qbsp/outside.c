@@ -45,7 +45,7 @@ qboolean PlaceOccupant (int num, vec3_t point, node_t *headnode)
 MarkLeakTrail
 ==============
 */
-portal_t	*prevleaknode;
+portal_t	*prevleaknode = NULL;
 FILE	*leakfile;
 void MarkLeakTrail (portal_t *n2)
 {
@@ -67,15 +67,19 @@ void MarkLeakTrail (portal_t *n2)
 	for (i=1 ; i< n2->winding->numpoints ; i++)
 	{
 		for (j=0 ; j<3 ; j++)
-			p1[j] = (p1[j] + n2->winding->points[i][j]) / 2;
+			p1[j] = p1[j] + n2->winding->points[i][j];
 	}
+	for (j=0 ; j<3 ; j++)
+		p1[j] /= n2->winding->numpoints;
 	
 	VectorCopy (n1->winding->points[0], p2);
 	for (i=1 ; i< n1->winding->numpoints ; i++)
 	{
 		for (j=0 ; j<3 ; j++)
-			p2[j] = (p2[j] + n1->winding->points[i][j]) / 2;
+			p2[j] = p2[j] + n1->winding->points[i][j];
 	}
+	for (j=0 ; j<3 ; j++)
+		p2[j] /= n1->winding->numpoints;
 		
 	VectorSubtract (p2, p1, dir);
 	len = VectorLength (dir);
@@ -98,8 +102,8 @@ If fill is false, just check, don't fill
 Returns true if an occupied leaf is reached
 ==================
 */
-int		hit_occupied;
-int		backdraw;
+int		hit_occupied = 0;
+int		backdraw = 0;
 qboolean RecursiveFillOutside (node_t *l, qboolean fill)
 {
 	portal_t	*p;
@@ -111,8 +115,10 @@ qboolean RecursiveFillOutside (node_t *l, qboolean fill)
 	if (l->valid == valid)
 		return false;
 	
-	if (l->occupied)
+	if (l->occupied) {
+		backdraw = 1000;
 		return true;
+	}
 	
 	l->valid = valid;
 
@@ -225,14 +231,15 @@ qboolean FillOutside (node_t *node)
 	if (RecursiveFillOutside (outside_node.portals->nodes[s], false))
 	{
 		v = entities[hit_occupied].origin;
-		qprintf ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+		printf ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+		printf( " LEAK in hull %i\n", hullnum );
 		qprintf ("reached occupant at: (%4.0f,%4.0f,%4.0f)\n"
 		, v[0], v[1], v[2]);
 		qprintf ("no filling performed\n");
 		if (!hullnum)
 			fclose (leakfile);
-		qprintf ("leak file written to %s\n", pointfilename);			
-		qprintf ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+		printf ("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+		printf ("leak file written to %s\n", pointfilename);
 		return false;
 	}
 	if (!hullnum)

@@ -1,3 +1,12 @@
+Fork of Quake compiler tools with support for map format 220 used by Jackhammer level editor.
+
+# Building from sources on Linux
+
+To build compilers go to qutils directory and run:
+
+    make
+
+# Original README.TXT by id Software
 
 This is the readme from our most recent licensed developer CD.  Not all of it is applicable to this source upload, because the map editor, source data, and game source code have not been made freely available (gotta have some reason to charge lots of $$$ for it...), but it is the best documentation I have.
 
