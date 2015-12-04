@@ -67,7 +67,7 @@ $(BIN_DIR)/light: $(LIGHT_OBJECTS) $(LIGHT_COMMON_OBJECTS)
 $(BUILD_DIR)/light/%.o: light/%.c
 	$(CC) -c $(CFLAGS) $(PTHREAD_FLAGS) -DDOUBLEVEC_T $(INCLUDE_DIRS) $< -o $@
 $(BUILD_DIR)/light/common/%.o: common/%.c
-	$(CC) -c $(CFLAGS) $(PTHREAD_FLAGS) $(INCLUDE_DIRS) $< -o $@
+	$(CC) -c $(CFLAGS) $(PTHREAD_FLAGS) -DDOUBLEVEC_T $(INCLUDE_DIRS) $< -o $@
 	
 clean_qbsp:
 	rm -rf $(BUILD_DIR)/qbsp $(BIN_DIR)/qbsp
