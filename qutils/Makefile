@@ -1,8 +1,13 @@
 
+CFLAGS=-I../../common -O2 $(USER_FLAGS)
+CPPCHECKFLAGS=-I common/ --std=posix --std=c89 --platform=unix64 --platform=unix32 --platform=win32A -f -q
+
+PTHREAD_FLAGS=-pthread
+
 BIN_DIR=bin
 BUILD_DIR=build
 
-LDFLAGS=-lm
+LDFLAGS=$(USER_FLAGS) -lm
 
 INCLUDE_DIRS=-Icommon
 
@@ -58,11 +63,11 @@ $(BUILD_DIR)/vis/common/%.o: common/%.c
 $(LIGHT_DIRS):
 	-mkdir -p $@
 $(BIN_DIR)/light: $(LIGHT_OBJECTS) $(LIGHT_COMMON_OBJECTS)
-	$(CC) $(LDFLAGS) $(LIGHT_OBJECTS) $(LIGHT_COMMON_OBJECTS) -o $@
+	$(CC) $(LIGHT_OBJECTS) $(LIGHT_COMMON_OBJECTS) -o $@ $(LDFLAGS) $(PTHREAD_FLAGS)
 $(BUILD_DIR)/light/%.o: light/%.c
-	$(CC) -c $(CFLAGS) $(INCLUDE_DIRS) $< -o $@
+	$(CC) -c $(CFLAGS) $(PTHREAD_FLAGS) -DDOUBLEVEC_T $(INCLUDE_DIRS) $< -o $@
 $(BUILD_DIR)/light/common/%.o: common/%.c
-	$(CC) -c $(CFLAGS) $(INCLUDE_DIRS) $< -o $@
+	$(CC) -c $(CFLAGS) $(PTHREAD_FLAGS) $(INCLUDE_DIRS) $< -o $@
 	
 clean_qbsp:
 	rm -rf $(BUILD_DIR)/qbsp $(BIN_DIR)/qbsp
@@ -76,3 +81,16 @@ clean_light:
 	
 clean: clean_qbsp clean_vis clean_light
 
+check-common:
+	cppcheck $(CPPCHECKFLAGS) common
+
+check-qbsp:
+	cppcheck $(CPPCHECKFLAGS) qbsp
+	
+check-vis:
+	cppcheck $(CPPCHECKFLAGS) vis
+	
+check-light:
+	cppcheck $(CPPCHECKFLAGS) -DDOUBLEVEC_T light
+
+check: check-common check-qbsp check-vis check-light

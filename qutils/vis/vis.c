@@ -117,12 +117,12 @@ NewWinding
 winding_t *NewWinding (int points)
 {
 	winding_t	*w;
-	int			size;
+	ptrdiff_t	size;
 	
 	if (points > MAX_POINTS_ON_WINDING)
 		Error ("NewWinding: %i points", points);
 	
-	size = (int)((winding_t *)0)->points[points];
+	size = (ptrdiff_t)((winding_t *)0)->points[points];
 	w = malloc (size);
 	memset (w, 0, size);
 	
@@ -165,10 +165,10 @@ CopyWinding
 */
 winding_t	*CopyWinding (winding_t *w)
 {
-	int			size;
+	ptrdiff_t	size;
 	winding_t	*c;
 	
-	size = (int)((winding_t *)0)->points[w->numpoints];
+	size = (ptrdiff_t)((winding_t *)0)->points[w->numpoints];
 	c = malloc (size);
 	memcpy (c, w, size);
 	c->original = false;
