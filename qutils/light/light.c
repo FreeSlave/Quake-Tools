@@ -122,6 +122,8 @@ int main (int argc, char **argv)
 		Error ("usage: light [-threads num] [-extra] bspfile");
 
 	InitThreads ();
+    
+    printf("Using %d threads\n", numthreads);
 
 	start = I_FloatTime ();
 
